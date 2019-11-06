@@ -1,0 +1,25 @@
+body{
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    flex-direction: column;
+    margin: 0px;
+    background-color: skyblue;
+}
+
+input{
+    height: 30px;
+}
+
+ul{
+    padding: 0px;
+}
+
+li{
+    list-style-type: none;
+}
+
+img{
+    width: 200px;
+    height: 200px;
+}
