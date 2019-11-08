@@ -7,6 +7,14 @@ body{
     background-color: skyblue;
 }
 
+h1{
+    margin: 20px;
+}
+
+h2{
+    margin: 0px;
+}
+
 input{
     height: 30px;
 }
@@ -22,6 +30,7 @@ li{
 button{
     width: 100px;
     height: 50px;
+    margin-bottom: 20px;
 }
 
 /* img{
@@ -77,4 +86,13 @@ button{
 
 #image:hover .hidden-fade{
     max-width: 100%;
+}
+
+.favorite{
+    width: 200px;
+    height: 200px;
+    background-color: blue;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }

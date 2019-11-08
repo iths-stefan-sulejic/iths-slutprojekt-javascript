@@ -44,7 +44,8 @@ input.addEventListener("keyup", function(){
     createDropdown(matching)
 })
 
-// let sup = false
+let result
+
 input.addEventListener("keyup", async function(event){
     if(event.keyCode === 13){
         let container = document.querySelector(".puppy-container")
@@ -53,11 +54,11 @@ input.addEventListener("keyup", async function(event){
             let imageContainer = document.querySelector(".hidden")
             imageContainer.classList.remove("hidden")
 
-            let result = await getData(dogBreed)
+            result = await getData(dogBreed)
             document.getElementById('image').style.backgroundImage = "url('"+[result]+"')"
 
         }else{
-            let result = await getData(dogBreed)
+            result = await getData(dogBreed)
             document.getElementById('image').style.backgroundImage = "url('"+[result]+"')"
         }
         currentBreed = dogBreed
@@ -66,6 +67,22 @@ input.addEventListener("keyup", async function(event){
 
 let button = document.querySelector("button")
 button.addEventListener("click", async function(){
-    let result = await getData(currentBreed)
+    result = await getData(currentBreed)
     document.getElementById('image').style.backgroundImage = "url('"+[result]+"')"
+})
+
+let favoriteList = document.querySelector(".favorites")
+let favoriteImages = []
+let addToFavorites = document.querySelector("#image > section > p")
+
+addToFavorites.addEventListener("click", function(event){
+    let currentImage = event.target.parentNode.parentNode.style.backgroundImage
+    console.log(currentImage)
+    if(!favoriteImages.includes(currentImage)){
+        let favorite = document.createElement("section")
+        favorite.classList.toggle("favorite")
+        favoriteList.append(favorite)
+        favorite.style.backgroundImage = currentImage
+        favoriteImages.push(currentImage)
+    }
 })
