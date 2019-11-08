@@ -1,7 +1,12 @@
-let breedData = ["Chow", "Dalmatian", "Husky"]
+let breedData = ["Affenpinscher", "African", "Airedale", "Akita", "Appenzeller", "Basenji", "Beagle", "Bluetick", "Borzoi", "Bouvier", "Boxer", "Brabancon", "Briard", "Cairn", "Chihuahua", "Chow", "Clumber", "Cockapoo", "coonhound", "cotondetulear", "dachshund", "dalmatian", "dhole", "dingo", "doberman", "entlebucher", "eskimo", "germanshepherd", "groenendael", "husky", "keeshond", "kelpie", "komondor", "kuvasz", "labrador", "leonberg", "lhasa", "malamute", "malinois", "maltese", "mexicanhairless", "mix", "newfoundland", "otterhound", "papillon", "pekinese", "pembroke", "pitbull", "pomeranian", "pug", "puggle", "pyrenees", "redbone", "rottweiler", "saluki", "samoyed", "schipperke", "shiba", "shihtzu", "stbernard", "vizsla", "weimaraner", "whippet"]
 breedData = breedData.map(breed => breed.toLowerCase())
-let ul = document.querySelector(".matches")
+
 let currentBreed;
+let input = document.querySelector("input")
+let result
+let button = document.querySelector("button")
+let favoriteImages = []
+let addToFavorites = document.querySelector("#image > section > p")
 
 function matchingBreeds(userInput){
     let result = []
@@ -17,6 +22,7 @@ function matchingBreeds(userInput){
 }
 
 function createDropdown(list){
+    let ul = document.querySelector(".matches")
     for(let breed of list){
         let li = document.createElement("li")
         li.innerText = breed
@@ -37,16 +43,29 @@ async function getData(dogBreed){
     return convert.message
 }
 
-let input = document.querySelector("input")
-input.addEventListener("keyup", function(){
-    clearDropdown()
-    let matching = matchingBreeds(input.value)
-    createDropdown(matching)
-})
+function favorites(event){
+    let favoriteList = document.querySelector(".favorites")
+    let currentImage = event.target.parentNode.parentNode.style.backgroundImage
+    let x= document.createElement("div")
+    if(!favoriteImages.includes(currentImage)){
+        let favorite = document.createElement("section")
+        favorite.classList.toggle("favorite")
+        favoriteList.append(favorite)
 
-let result
+        favorite.append(x)
+        x.classList.toggle("close")
 
-input.addEventListener("keyup", async function(event){
+        x.addEventListener("click", function(){
+            favorite.remove();
+        })
+
+        favorite.style.backgroundImage = currentImage
+        
+        favoriteImages.push(currentImage)
+    }
+}
+
+async function enter(){
     if(event.keyCode === 13){
         let container = document.querySelector(".puppy-container")
         let dogBreed = document.querySelector("body > ul > li:nth-child(1)").innerText
@@ -63,26 +82,21 @@ input.addEventListener("keyup", async function(event){
         }
         currentBreed = dogBreed
     }
-})
+}
 
-let button = document.querySelector("button")
-button.addEventListener("click", async function(){
+async function fetchButton(){
     result = await getData(currentBreed)
     document.getElementById('image').style.backgroundImage = "url('"+[result]+"')"
+}
+
+input.addEventListener("keyup", function(){
+    clearDropdown()
+    let matching = matchingBreeds(input.value)
+    createDropdown(matching)
 })
 
-let favoriteList = document.querySelector(".favorites")
-let favoriteImages = []
-let addToFavorites = document.querySelector("#image > section > p")
+input.addEventListener("keyup", enter)
 
-addToFavorites.addEventListener("click", function(event){
-    let currentImage = event.target.parentNode.parentNode.style.backgroundImage
-    console.log(currentImage)
-    if(!favoriteImages.includes(currentImage)){
-        let favorite = document.createElement("section")
-        favorite.classList.toggle("favorite")
-        favoriteList.append(favorite)
-        favorite.style.backgroundImage = currentImage
-        favoriteImages.push(currentImage)
-    }
-})
+button.addEventListener("click", fetchButton)
+
+addToFavorites.addEventListener("click", favorites)
