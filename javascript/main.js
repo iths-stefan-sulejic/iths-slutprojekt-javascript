@@ -6,7 +6,7 @@ let input = document.querySelector("input")
 let result
 let button = document.querySelector("button")
 let favoriteImages = []
-let addToFavorites = document.querySelector("#image > section > p")
+let addToFavorites = document.querySelector("#image > section")
 
 function matchingBreeds(userInput){
     let result = []
@@ -43,9 +43,9 @@ async function getData(dogBreed){
     return convert.message
 }
 
-function favorites(event){
+function favorites(){
     let favoriteList = document.querySelector(".favorites")
-    let currentImage = event.target.parentNode.parentNode.style.backgroundImage
+    let currentImage = document.querySelector("#image").style.backgroundImage
     let x= document.createElement("div")
     if(!favoriteImages.includes(currentImage)){
         let favorite = document.createElement("section")
@@ -56,6 +56,7 @@ function favorites(event){
         x.classList.toggle("close")
 
         x.addEventListener("click", function(){
+            favoriteImages = favoriteImages.filter(image => image != currentImage)
             favorite.remove();
         })
 
@@ -69,6 +70,7 @@ async function enter(){
     if(event.keyCode === 13){
         let container = document.querySelector(".puppy-container")
         let dogBreed = document.querySelector("body > ul > li:nth-child(1)").innerText
+        input.value = ""
         if(container.classList.contains("hidden")){
             let imageContainer = document.querySelector(".hidden")
             imageContainer.classList.remove("hidden")

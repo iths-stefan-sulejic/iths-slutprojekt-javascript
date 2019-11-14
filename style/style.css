@@ -9,6 +9,12 @@ body{
 
 h1{
     margin: 20px;
+    margin-bottom: 5px;
+}
+
+p{
+    margin: 15px;
+    margin-bottom: 20px;
 }
 
 h2{
